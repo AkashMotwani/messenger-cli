@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-Run Integration Tests</actionName>
+            <displayName>Run Integration Tests</displayName>
+            <goals>
+                <goal>clean:clean</goal>
+                <goal>test-compile</goal>
+                <goal>failsafe:integration-test</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Clover</actionName>
+            <displayName>Clover</displayName>
+            <goals>
+                <goal>clean:clean</goal>
+                <goal>clover2:setup</goal>
+                <goal>test</goal>
+                <goal>clover2:aggregate</goal>
+                <goal>clover2:clover</goal>
+            </goals>
+        </action>
+</actions>
