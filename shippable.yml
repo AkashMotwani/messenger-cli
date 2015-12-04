@@ -1,0 +1,32 @@
+# language setting
+language: java
+
+# jdk tag
+jdk:
+    - oraclejdk8
+    
+env:
+    - secure: AkC4Sxqoqrnr3BR7QWN19kJxRf8JFqKTRfV1AITg1WJ9uw0SCBLkQ6nUUh3Ef7OQQyf55iGpF/fthgOgFfPOGI5SB/inIHZEIIadHNz3VPDyEEqLPIl7yVJi9KKdd3a6FhdQ4JGluwNWO1uPdYMbqP2YAwjLJlkZLvZlNKEkZtMdokF6fth/wsFcdgXXMMgSapyRKR1RsWznBYG+gS9zocQBirmpKeq8Gd8fA5f+veqT7pgii5qDsmEGwOn879z8ENYFiYtlMK1C1gZRWl7P3onHVHL/6o27fGDA7s0+fXBBwh5Ldw3mENGGzgjIIidNb2MB1CqTcmSu5V7O4jVabh3q/LKirIZvOTdJDDmRpgatmN6LrbGwLoR6ggj+bQ7U+QKGPSIS/aFyTF32nLUZv7K4HU49/bs5xIDDnpot6sSF1tif06pKvskKhEFiFMuFlvCRw1dX0gEHPaBw+Yq+P2wQt4ZngR+AQ00omSN47skZe/9SxtYbc8wU4Ubj2An+yWZkWwqbvy13qgPisUpEOE1yxtFyx2JcyOsOB+qvmMIrN7etX2Mw4rbmqltI/2XlD4vrAs1uN5eytX49b5UJO1O90mTbqganq1OFByXh9N6gKJnrDDr84IW8mP0xZrko7Mlp5khTx7IkVfR5qhqaDMfO4K7yLEAThfUIDcO/aR4=
+
+before_install:
+    - cd messenger-cli
+    - echo $MY_CLOVER_LICENSE_LINE1 > clover.license
+    - echo $MY_CLOVER_LICENSE_LINE2 >> clover.license
+    - echo $MY_CLOVER_LICENSE_LINE3 >> clover.license
+    - echo $MY_CLOVER_LICENSE_LINE4 >> clover.license
+    - echo $MY_CLOVER_LICENSE_LINE5 >> clover.license
+
+install:
+    - mvn clean install -DskipTests=true
+
+before_script: 
+    - mkdir -p ../shippable/testresults
+    - mkdir -p ../shippable/codecoverage
+    
+script:
+    - mvn test 
+    
+after_script:
+    - mv target/surefire-reports/*.xml ../shippable/testresults
+    - mvn clean:clean clover2:setup test clover2:aggregate clover2:clover -Dmaven.clover.licenseLocation=/home/shippable/workspace/src/github.com/dfranssen/messenger-cli/messenger-cli/clover.license
+    - mv target/site/clover/clover.xml ../shippable/codecoverage

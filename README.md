@@ -1,4 +1,7 @@
-# messenger-cli
+messenger-cli
+=============
+![](https://img.shields.io/shippable/56609a0f1895ca44744bd9e4.svg)
+
 A Java 8 based [CLI](https://nl.wikipedia.org/wiki/Command-line-interface) for sending SMS messages. 
 
 It is based on the [messenger-engine](https://github.com/dfranssen/messenger-engine) project and has following features:
